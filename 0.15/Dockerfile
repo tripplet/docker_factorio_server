@@ -16,6 +16,7 @@ RUN mkdir /opt && \
     rm /tmp/factorio_headless_x64_$VERSION.tar.xz && \
     ln -s /factorio/saves /opt/factorio/saves && \
     ln -s /factorio/mods /opt/factorio/mods && \
+    ln -s /factorio/log /opt/factorio/log && \
     apk del .build-deps
 
 VOLUME /factorio

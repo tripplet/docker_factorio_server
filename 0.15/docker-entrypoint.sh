@@ -8,10 +8,13 @@ CONFIG=/factorio/config
 mkdir -p $SAVES
 mkdir -p /factorio/mods
 mkdir -p $CONFIG
+mkdir -p /factorio/log
 
 if [ ! -f $CONFIG/rconpw ]; then
   echo $(pwgen 15 1) > $CONFIG/rconpw
 fi
+
+RCONPW=$(cat $CONFIG/rconpw)
 
 if [ ! -f $CONFIG/server-settings.json ]; then
   cp /opt/factorio/data/server-settings.example.json $CONFIG/server-settings.json
@@ -33,4 +36,4 @@ exec /opt/factorio/bin/x64/factorio \
   --server-settings $CONFIG/server-settings.json \
   --server-whitelist $CONFIG/server-whitelist.json \
   --rcon-port 27015 \
-  --rcon-password "$(cat $CONFIG/rconpw)"
+  --rcon-password "$RCONPW" 2>&1 | tee /factorio/log/server.log
