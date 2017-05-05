@@ -1,5 +1,5 @@
 sudo docker run --rm -it \
-	-v /tmp/factorio:/factorio \
+	-v /factorio/server:/factorio \
 	--name factorio \
 	factorio "$@"
-find /tmp/factorio -type f
+find /factorio/server -type f
