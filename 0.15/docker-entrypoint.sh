@@ -35,5 +35,8 @@ exec /opt/factorio/bin/x64/factorio \
   --start-server-load-latest \
   --server-settings $CONFIG/server-settings.json \
   --server-whitelist $CONFIG/server-whitelist.json \
+  --server-banlist $CONFIG/server-banlist.json \
   --rcon-port 27015 \
-  --rcon-password "$RCONPW" 2>&1 | tee /factorio/log/server.log
+  --rcon-password "$RCONPW" \
+  --server-id /factorio/config/server-id.json \
+  2>&1 | tee /factorio/log/server.log
