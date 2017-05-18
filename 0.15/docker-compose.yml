@@ -5,4 +5,4 @@ services:
     ports:
      - "34197:34197"
     volumes:
-     - /tmp/factorio:/factorio
+     - /factorio/server:/factorio
