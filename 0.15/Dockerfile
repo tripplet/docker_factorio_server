@@ -19,7 +19,8 @@ RUN mkdir /opt && \
     ln -s /factorio/saves /opt/factorio/saves && \
     ln -s /factorio/mods /opt/factorio/mods && \
     apk del .build-deps && \
-    adduser -u 8415 -s /bin/sh -SDH fdaemon && \
+    addgroup -g 8415 -S fdaemon && \
+    adduser -u 8415 -G fdaemon -s /bin/sh -SDH fdaemon && \
     chown -R fdaemon:fdaemon /opt/factorio /factorio
 
 USER fdaemon
