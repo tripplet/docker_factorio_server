@@ -1,6 +1,6 @@
 # Factorio [![](https://images.microbadger.com/badges/image/dtandersen/factorio.svg)](https://microbadger.com/images/dtandersen/factorio "Get your own image badge on microbadger.com") [![Docker Pulls](https://img.shields.io/docker/pulls/dtandersen/factorio.svg)](https://hub.docker.com/r/dtandersen/factorio/) [![Docker Stars](https://img.shields.io/docker/stars/dtandersen/factorio.svg)](https://hub.docker.com/r/dtandersen/factorio/)
 
-* `0.15.16`, `0.15`, `latest` [(0.15/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.15/Dockerfile)
+* `0.15.23`, `0.15`, `latest` [(0.15/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.15/Dockerfile)
 * `0.14.23`, `0.14`, `stable` [(0.14/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.14/Dockerfile)
 * `0.13.20`, `0.13`  [(0.13/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.13/Dockerfile)
 
@@ -94,7 +94,7 @@ Now run the server as before. In about a minute the new version of Factorio shou
 
 ## Saves
 
-A new map named `_autosave1.zip` is generated the first time the server is started. The `map-gen-settings.json` file in `/tmp/factorio/config` is used for the map settings. On subsequent runs the newest save is used.
+A new map named `_autosave1.zip` is generated the first time the server is started. The `map-gen-settings.json` and `map-settings.json` files in `/tmp/factorio/config` are used for the map settings. On subsequent runs the newest save is used.
 
 To load an old save stop the server and run the command `touch oldsave.zip`. This resets the date. Then restart the server. Another option is to delete all saves except one.
 
