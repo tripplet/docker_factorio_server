@@ -1,0 +1,8 @@
+version: '2'
+services:
+  factorio:
+    build: .
+    ports:
+     - "34197:34197"
+    volumes:
+     - /tmp/factorio:/factorio
