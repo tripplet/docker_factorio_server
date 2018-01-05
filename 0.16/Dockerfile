@@ -20,7 +20,6 @@ RUN mkdir /opt && \
     rm /tmp/factorio_headless_x64_$VERSION.tar.xz && \
     ln -s /factorio/saves /opt/factorio/saves && \
     ln -s /factorio/mods /opt/factorio/mods && \
-    ln -s /factorio/log /opt/factorio/log && \
     apk del .build-deps && \
     addgroup -g 845 -S fdaemon && \
     adduser -u 845 -G fdaemon -s /bin/sh -SDH fdaemon && \
