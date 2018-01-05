@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-glibc:alpine-3.6
+FROM frolvlad/alpine-glibc:alpine-3.7
 
 MAINTAINER https://github.com/dtandersen/docker_factorio_server
 
@@ -23,6 +23,7 @@ RUN mkdir -p /opt /factorio && \
     rm /tmp/factorio_headless_x64_$VERSION.tar.xz && \
     ln -s /factorio/saves /opt/factorio/saves && \
     ln -s /factorio/mods /opt/factorio/mods && \
+    ln -s /factorio/log /opt/factorio/log && \
     apk del .build-deps && \
     addgroup -g $PGID -S $GROUP && \
     adduser -u $PUID -G $USER -s /bin/sh -SDH $GROUP && \
