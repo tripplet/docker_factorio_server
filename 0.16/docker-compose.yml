@@ -6,7 +6,7 @@ services:
       - "34197:34197/udp"
       - "27015:27015/tcp"
     volumes:
-      - /opt/factorio/game-server:/factorio
+      - ../../data:/factorio
   factorio-notifications:
     depends_on: 
       - factorio
@@ -14,5 +14,5 @@ services:
     environment:
       - TZ=Europe/Berlin
     volumes:
-      - /opt/factorio/notifications/config.yaml:/config.yaml
-      - /opt/factorio/game-server/log/:/log
+      - ../../notifications/config.yaml:/config.yaml
+      - ../../data/log/:/log

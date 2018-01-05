@@ -44,5 +44,5 @@ exec /opt/factorio/bin/x64/factorio \
   --server-banlist $CONFIG/server-banlist.json \
   --rcon-port $RCON_PORT \
   --rcon-password "$(cat $CONFIG/rconpw)" \
-  --server-id /factorio/config/server-id.json\
+  --server-id /factorio/config/server-id.json \
   2>&1 | tee /factorio/log/server.log
