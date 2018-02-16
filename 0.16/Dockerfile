@@ -26,7 +26,7 @@ RUN mkdir -p /opt /factorio && \
     ln -s /factorio/log /opt/factorio/log && \
     apk del .build-deps && \
     addgroup -g $PGID -S $GROUP && \
-    adduser -u $PUID -G $USER -s /bin/sh -SDH $GROUP && \
+    adduser -u $PUID -G $GROUP -s /bin/sh -SDH $USER && \
     chown -R $USER:$GROUP /opt/factorio /factorio
 
 VOLUME /factorio
