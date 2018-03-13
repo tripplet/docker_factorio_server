@@ -11,12 +11,12 @@ ENV PORT=34197 \
     RCON_PORT=27015 \
     VERSION=0.16.30 \
     SHA1=7ceac7d3cfee2c301707e2622400d2c7bc6f2e8c \
-    SAVES=/opt/factorio/saves \
-    CONFIG=/opt/factorio/config \
-    MODS=/opt/factorio/mods \
-    SCENARIOS=/opt/factorio/scenarios \
-    ENTRYPOINTS=/opt/factorio/entrypoints \
-    LOGS=/opt/factorio/log
+    SAVES=/factorio/saves \
+    CONFIG=/factorio/config \
+    MODS=/factorio/mods \
+    SCENARIOS=/factorio/scenarios \
+    ENTRYPOINTS=/factorio/entrypoints \
+    LOGS=/factorio/log
 
 RUN mkdir -p /opt /factorio && \
     apk add --update --no-cache pwgen && \
