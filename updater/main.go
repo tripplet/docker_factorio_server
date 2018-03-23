@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/sha1"
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -18,6 +19,72 @@ var findEnvParameter = regexp.MustCompile(`ENV(\s+([^=\s]+)=([^\s=]+)(\s\\)?)+`)
 var envParameter = regexp.MustCompile(`(?P<key>[^=\s]+)=(?P<value>[^\s=]+)`)
 
 const url = "https://www.factorio.com/download-headless/experimental"
+
+func main() {
+	dockerfilePath := flag.String("dockerfile", "Dockerfile", "Path to dockerfile if not same directory")
+
+	fmt.Println("- Checking for update...")
+	resp, err := http.Get(url)
+	if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+	}
+	defer resp.Body.Close()
+
+	doc, err := html.Parse(resp.Body)
+	if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+	}
+
+	versions := getElementsByTag(doc, "h3")
+	latestVersion := ""
+
+	re := regexp.MustCompile(`(\d+\.\d+\.\d+)`)
+
+	for _, node := range versions {
+		v := re.FindString(node.Data)
+
+		if latestVersion == "" || version.CompareSimple(v, latestVersion) > 0 {
+			latestVersion = v
+		}
+	}
+
+	envParamter := getEnvParameterFromDockerfile(*dockerfilePath)
+	fmt.Println("  Current version: " + envParamter["VERSION"])
+	fmt.Println("  Latest version:  " + latestVersion)
+
+	if version.CompareSimple(latestVersion, envParamter["VERSION"]) <= 0 {
+		fmt.Println()
+		fmt.Println("- No update available")
+		os.Exit(1)
+	}
+
+	fmt.Println()
+	fmt.Println("- Retrieving hash...")
+	respfile, err := http.Get(fmt.Sprintf("https://www.factorio.com/get-download/%s/headless/linux64", latestVersion))
+	if err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+	}
+	defer respfile.Body.Close()
+
+	h := sha1.New()
+	if _, err := io.Copy(h, respfile.Body); err != nil {
+        fmt.Println(err)
+        os.Exit(1)
+	}
+
+	sha1 := fmt.Sprintf("%x", h.Sum(nil))
+	fmt.Println("  SHA1: " + sha1)
+
+	fmt.Println()
+	fmt.Println("- Updating Dockerfile...")
+
+	updateDockerfile(*dockerfilePath, envParamter, latestVersion, sha1)
+	fmt.Println("- Finished")
+    os.Exit(0)
+}
 
 func getElementsByTag(doc *html.Node, tag string) (nodes []*html.Node) {
 	var f func(*html.Node)
@@ -62,61 +129,5 @@ func updateDockerfile(filepath string, parameter map[string]string, newVersion s
 	dockerfileStr = strings.Replace(dockerfileStr, env, envNew, 1)
 
 	ioutil.WriteFile(filepath, []byte(dockerfileStr), 0666)
-}
-
-func main() {
-	fmt.Println("- Checking for update...")
-	resp, _ := http.Get(url)
-	defer resp.Body.Close()
-
-	doc, err := html.Parse(resp.Body)
-	if err != nil {
-		panic(err)
-	}
-
-	versions := getElementsByTag(doc, "h3")
-	latestVersion := ""
-
-	re := regexp.MustCompile(`(\d+\.\d+\.\d+)`)
-
-	for _, node := range versions {
-		v := re.FindString(node.Data)
-
-		if latestVersion == "" || version.CompareSimple(v, latestVersion) > 0 {
-			latestVersion = v
-		}
-	}
-
-	envParamter := getEnvParameterFromDockerfile("Dockerfile")
-	fmt.Println("  Current version: " + envParamter["VERSION"])
-	fmt.Println("  Latest version:  " + latestVersion)
-
-	if version.CompareSimple(latestVersion, envParamter["VERSION"]) <= 0 {
-		fmt.Println()
-		fmt.Println("- No update available")
-		os.Exit(0)
-	}
-
-	fmt.Println()
-	fmt.Println("- Retrieving hash...")
-	respfile, err := http.Get(fmt.Sprintf("https://www.factorio.com/get-download/%s/headless/linux64", latestVersion))
-	if err != nil {
-		panic(err)
-	}
-	defer respfile.Body.Close()
-
-	h := sha1.New()
-	if _, err := io.Copy(h, respfile.Body); err != nil {
-		panic(err)
-	}
-
-	sha1 := fmt.Sprintf("%X", h.Sum(nil))
-	fmt.Println("  SHA1: " + sha1)
-
-	fmt.Println()
-	fmt.Println("- Updating Dockerfile...")
-
-	updateDockerfile("Dockerfile", envParamter, latestVersion, sha1)
-	fmt.Println("- Finished")
 }
 
