@@ -26,15 +26,15 @@ func main() {
 	fmt.Println("- Checking for update...")
 	resp, err := http.Get(url)
 	if err != nil {
-        fmt.Println(err)
-        os.Exit(1)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 	defer resp.Body.Close()
 
 	doc, err := html.Parse(resp.Body)
 	if err != nil {
-        fmt.Println(err)
-        os.Exit(1)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	versions := getElementsByTag(doc, "h3")
@@ -64,15 +64,15 @@ func main() {
 	fmt.Println("- Retrieving hash...")
 	respfile, err := http.Get(fmt.Sprintf("https://www.factorio.com/get-download/%s/headless/linux64", latestVersion))
 	if err != nil {
-        fmt.Println(err)
-        os.Exit(1)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 	defer respfile.Body.Close()
 
 	h := sha1.New()
 	if _, err := io.Copy(h, respfile.Body); err != nil {
-        fmt.Println(err)
-        os.Exit(1)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 
 	sha1 := fmt.Sprintf("%x", h.Sum(nil))
@@ -83,7 +83,7 @@ func main() {
 
 	updateDockerfile(*dockerfilePath, envParamter, latestVersion, sha1)
 	fmt.Println("- Finished")
-    os.Exit(0)
+	os.Exit(0)
 }
 
 func getElementsByTag(doc *html.Node, tag string) (nodes []*html.Node) {
@@ -130,4 +130,3 @@ func updateDockerfile(filepath string, parameter map[string]string, newVersion s
 
 	ioutil.WriteFile(filepath, []byte(dockerfileStr), 0666)
 }
-
