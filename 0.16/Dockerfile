@@ -9,18 +9,13 @@ ARG PGID=845
 
 ENV PORT=34197 \
     RCON_PORT=27015 \
-    VERSION=0.16.35 \
-    SHA1=35f164ae348507e8c6dfb5975893c3aaaff98af8 \
+    VERSION=0.16.36 \
+    SHA1=b771c7564dff13a3a8c7b74bbde39a41d2eeadc0 \
     SAVES=/factorio/saves \
     CONFIG=/factorio/config \
     MODS=/factorio/mods \
-<<<<<<< HEAD
     SCENARIOS=/factorio/scenarios \
-    ENTRYPOINTS=/factorio/entrypoints \
     LOGS=/factorio/log
-=======
-    SCENARIOS=/factorio/scenarios
->>>>>>> upstream/master
 
 RUN mkdir -p /opt /factorio && \
     apk add --update --no-cache pwgen && \
@@ -31,17 +26,10 @@ RUN mkdir -p /opt /factorio && \
     tar xf /tmp/factorio_headless_x64_$VERSION.tar.xz --directory /opt && \
     chmod ugo=rwx /opt/factorio && \
     rm /tmp/factorio_headless_x64_$VERSION.tar.xz && \
-<<<<<<< HEAD
     ln -s -f $SAVES /opt/factorio/saves && \
     ln -s -f $MODS /opt/factorio/mods && \
     ln -s -f $SCENARIOS /opt/factorio/scenarios && \
-    ln -s -f $ENTRYPOINTS /opt/factorio/entrypoints && \
     ln -s -f $LOGS /opt/factorio/log && \
-=======
-    ln -s $SAVES /opt/factorio/saves && \
-    ln -s $MODS /opt/factorio/mods && \
-    ln -s $SCENARIOS /opt/factorio/scenarios && \
->>>>>>> upstream/master
     apk del .build-deps && \
     addgroup -g $PGID -S $GROUP && \
     adduser -u $PUID -G $GROUP -s /bin/sh -SDH $USER && \
