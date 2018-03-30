@@ -1,6 +1,6 @@
 # Factorio [![](https://images.microbadger.com/badges/image/dtandersen/factorio.svg)](https://microbadger.com/images/dtandersen/factorio "Get your own image badge on microbadger.com") [![Docker Pulls](https://img.shields.io/docker/pulls/dtandersen/factorio.svg)](https://hub.docker.com/r/dtandersen/factorio/) [![Docker Stars](https://img.shields.io/docker/stars/dtandersen/factorio.svg)](https://hub.docker.com/r/dtandersen/factorio/)
 
-* `0.16.30`, `0.16`, `latest` [(0.16/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.16/Dockerfile)
+* `0.16.35`, `0.16`, `latest` [(0.16/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.16/Dockerfile)
 * `0.15.40`, `0.15`, `stable` [(0.15/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.15/Dockerfile)
 * `0.14.23`, `0.14` [(0.14/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.14/Dockerfile)
 * `0.13.20`, `0.13`  [(0.13/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.13/Dockerfile)
@@ -124,7 +124,7 @@ docker run -d \
   -v /opt/factorio:/factorio \
   --name factorio \
   --restart=always  \
-  --entrypoint "/factorio/entrypoints/scenario.sh" \
+  --entrypoint "/scenario.sh" \
   dtandersen/factorio \
   MyScenarioName
 ```
@@ -140,7 +140,7 @@ docker run -d \
   -v /opt/factorio:/factorio \
   --name factorio \
   --restart=always  \
-  --entrypoint "/factorio/entrypoints/scenario2map.sh" \
+  --entrypoint "/scenario2map.sh" \
   dtandersen/factorio
   MyScenarioName
 ```
