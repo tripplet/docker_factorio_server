@@ -2,6 +2,7 @@ version: '2'
 services:
   factorio:
     build: .
+    image: factorio-server:0.16.39
     restart: unless-stopped
     ports:
       - "34197:34197/udp"

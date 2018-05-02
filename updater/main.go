@@ -16,12 +16,15 @@ import (
 )
 
 var findEnvParameter = regexp.MustCompile(`ENV(\s+([^=\s]+)=([^\s=]+)(\s\\)?)+`)
+var findImage = regexp.MustCompile(`(?P<pre>[ \t]*image:[ \t]*)(?P<image>\S+):(?P<tag>\S+)`)
 var envParameter = regexp.MustCompile(`(?P<key>[^=\s]+)=(?P<value>[^\s=]+)`)
 
 const url = "https://www.factorio.com/download-headless/experimental"
 
 func main() {
+	composefilePath := flag.String("composefile", "docker-compose.yml", "Path to compose file if not same directory")
 	dockerfilePath := flag.String("dockerfile", "Dockerfile", "Path to dockerfile if not same directory")
+	flag.Parse()
 
 	fmt.Println("- Checking for update...")
 	resp, err := http.Get(url)
@@ -80,8 +83,11 @@ func main() {
 
 	fmt.Println()
 	fmt.Println("- Updating Dockerfile...")
-
 	updateDockerfile(*dockerfilePath, envParamter, latestVersion, sha1)
+
+	fmt.Println("- Updating docker-compose file...")
+	updateComposefile(*composefilePath, latestVersion)
+
 	fmt.Println("- Finished")
 	os.Exit(0)
 }
@@ -114,6 +120,22 @@ func getEnvParameterFromDockerfile(filepath string) map[string]string {
 	}
 
 	return parameter
+}
+
+func updateComposefile(filepath string, newVersion string) {
+	composefile, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		panic(err)
+	}
+	composefileStr := string(composefile)
+
+	match := findImage.FindStringSubmatch(composefileStr)
+	if len(match) == 0 {
+		return
+	}
+
+	composefileStr = strings.Replace(composefileStr, match[0], match[1]+match[2]+":"+newVersion, 1)
+	ioutil.WriteFile(filepath, []byte(composefileStr), 0666)
 }
 
 func updateDockerfile(filepath string, parameter map[string]string, newVersion string, hash string) {
