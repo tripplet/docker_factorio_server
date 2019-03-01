@@ -1,15 +1,16 @@
 # Factorio [![](https://images.microbadger.com/badges/image/dtandersen/factorio.svg)](https://microbadger.com/images/dtandersen/factorio "Get your own image badge on microbadger.com") [![Docker Pulls](https://img.shields.io/docker/pulls/dtandersen/factorio.svg)](https://hub.docker.com/r/dtandersen/factorio/) [![Docker Stars](https://img.shields.io/docker/stars/dtandersen/factorio.svg)](https://hub.docker.com/r/dtandersen/factorio/)
 
-* `0.16.35`, `0.16`, `latest` [(0.16/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.16/Dockerfile)
-* `0.15.40`, `0.15`, `stable` [(0.15/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.15/Dockerfile)
+* `0.17.3`, `0.17`, `latest` [(0.17/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.17/Dockerfile)
+* `0.16.51`, `0.16`, `stable` [(0.16/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.16/Dockerfile)
+* `0.15.40`, `0.15` [(0.15/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.15/Dockerfile)
 * `0.14.23`, `0.14` [(0.14/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.14/Dockerfile)
 * `0.13.20`, `0.13`  [(0.13/Dockerfile)](https://github.com/dtandersen/docker_factorio_server/blob/master/0.13/Dockerfile)
 
 *Tag descriptions*
 
-* `latest` - highest version: may be experimental.
-* `stable` - highest version declared stable.
-* `0.x` - highest version in a branch: may be experimental.
+* `latest` - most up-to-date version (may be experimental).
+* `stable` - version declared stable on [factorio.com](https://www.factorio.com).
+* `0.x` - latest version in a branch.
 * `0.x.y` - a specific version.
 * `0.x-dev` - whatever is in master for that version.
 
@@ -39,7 +40,7 @@ sudo docker run -d \
   -p 27015:27015/tcp \
   -v /opt/factorio:/factorio \
   --name factorio \
-  --restart=always  \
+  --restart=always \
   dtandersen/factorio
 ```
 
@@ -131,7 +132,7 @@ docker run -d \
 
 ## Converting Scenarios to Regular Maps
 
-If you would like to export your scenario to a saved map, you can use the example entrypoint similar to the Scenario usag above. Factorio will run once, converting the Scenario to a saved Map in your saves directory. A restart of the docker image using the standard options will then load that map, just as if the scenario were just started by the Scenarios example noted above. 
+If you would like to export your scenario to a saved map, you can use the example entrypoint similar to the Scenario usag above. Factorio will run once, converting the Scenario to a saved Map in your saves directory. A restart of the docker image using the standard options will then load that map, just as if the scenario were just started by the Scenarios example noted above.
 
 ```
 docker run -d \
@@ -163,6 +164,24 @@ Create file `config/server-whitelist.json` and add the whitelisted users.
 		"friend"
 	]
 
+## Banlisting (0.17.1+)
+
+Create file `config/server-banlist.json` and add the banlisted users.
+
+    [
+        "bad_person",
+        "other_bad_person"
+    ]
+
+## Adminlisting (0.17.1+)
+
+Create file `config/server-adminlist.json` and add the adminlisted users.
+
+    [
+        "you",
+        "friend"
+    ]
+
 # Container Details
 
 The philosophy is to [keep it simple](http://wiki.c2.com/?KeepItSimple).
@@ -176,17 +195,21 @@ The philosophy is to [keep it simple](http://wiki.c2.com/?KeepItSimple).
 
 To keep things simple, the container uses a single volume mounted at `/factorio`. This volume stores configuration, mods, and saves.
 
+The files in this volume should be owned by the factorio user, uid 845.
+
     factorio
     |-- config
     |   |-- map-gen-settings.json
+    |   |-- map-settings.json
     |   |-- rconpw
+    |   |-- server-adminlist.json
+    |   |-- server-banlist.json
     |   |-- server-settings.json
     |   `-- server-whitelist.json
     |-- mods
     |   `-- fancymod.zip
     `-- saves
         `-- _autosave1.zip
-
 
 ## Docker Compose
 
@@ -259,16 +282,16 @@ sudo docker run -d \
   dtandersen/factorio
 ```
 
-VirtualBox users must enable Bridged networking in order for the host to be assigned an internal network IP. Enable Bridged networking in Vagrant with:
+## Vagrant
+
+[Vagrant](https://www.vagrantup.com/) is a easy way to setup a virtual machine (VM) to run Docker. The [Factorio Vagrant box repository](https://github.com/dtandersen/factorio-lan-vagrant) contains a sample Vagrantfile.
+
+For LAN games the VM needs an internal IP in order for clients to connect. One way to do this is with a public network. The VM uses DHCP to acquire an IP address. The VM must also forward port 34197.
 
 ```
   config.vm.network "public_network"
   config.vm.network "forwarded_port", guest: 34197, host: 34197
 ```
-
-## Vagrant
-
-Vagrant is a good way for those without a Linux machine to try Docker. Check out the [Factorio Vagrant Box](https://github.com/dtandersen/factorio-lan-vagrant).
 
 ## Troubleshooting
 
