@@ -9,13 +9,13 @@ ARG PGID=845
 
 ENV PORT=34197 \
     RCON_PORT=27015 \
-    VERSION=0.17.3 \
-    SHA1=df70827c7f3e39ee3443de4d8c10f30f71973fdf \
+    VERSION=0.17.32 \
+    SHA1=1dd0341e5a2f9c952e713078ee70649a782309fe \
     SAVES=/factorio/saves \
     CONFIG=/factorio/config \
     MODS=/factorio/mods \
     SCENARIOS=/factorio/scenarios \
-    SCRIPTOUTPUT=/factorio/script-output
+    LOGS=/factorio/logs
 
 RUN mkdir -p /opt /factorio && \
     apk add --update --no-cache pwgen su-exec binutils && \
@@ -26,10 +26,10 @@ RUN mkdir -p /opt /factorio && \
     tar xf /tmp/factorio_headless_x64_$VERSION.tar.xz --directory /opt && \
     chmod ugo=rwx /opt/factorio && \
     rm /tmp/factorio_headless_x64_$VERSION.tar.xz && \
-    ln -s $SAVES /opt/factorio/saves && \
-    ln -s $MODS /opt/factorio/mods && \
-    ln -s $SCENARIOS /opt/factorio/scenarios && \
-    ln -s $SCRIPTOUTPUT /opt/factorio/script-output && \
+    ln -s -f $SAVES /opt/factorio/saves && \
+    ln -s -f $MODS /opt/factorio/mods && \
+    ln -s -f $SCENARIOS /opt/factorio/scenarios && \
+    ln -s -f $LOGS /opt/factorio/logs && \
     apk del .build-deps && \
     addgroup -g $PGID -S $GROUP && \
     adduser -u $PUID -G $GROUP -s /bin/sh -SDH $USER && \

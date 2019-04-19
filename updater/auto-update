@@ -1,23 +1,49 @@
 #!/bin/sh
-DIR=/opt/factorio/docker-container/0.16
+DIR=/opt/factorio/docker-container/0.17
 
 cd ${DIR}
 RCONPW=$(cat /opt/factorio/data/config/rconpw)
 
-echo "- Checking for active players..."
-/opt/factorio/rcon-client/src/rcon -1 -H localhost -p 27015 -P ${RCONPW} /players | grep -i online
-if [ $? -eq 0 ]; then
-    echo "  Found active players. Exit"
-    exit
-else
-    echo "  No active players"
-fi
+UPDATE_SUCCESFUL=1
+FORCE_UPDATE=""
 
-echo
-/opt/factorio/docker-container/updater/updater -dockerfile "$DIR/Dockerfile" -composefile "$DIR/docker-compose.yml"
-if [ $? -eq 0 ]; then
-    docker-compose -f $DIR/docker-compose.yml down
-    docker-compose -f $DIR/docker-compose.yml build
-    docker-compose -f $DIR/docker-compose.yml up -d
-fi
+check_for_update() {
+    echo "- Checking for active players..."
+    /opt/factorio/rcon-client/src/rcon -1 -H localhost -p 27015 -P ${RCONPW} /players | grep -i online
+    if [ $? -eq 0 ]; then
+        echo "  Found active players. Exit"
+        exit
+    else
+        echo "  No active players"
+    fi
+    
+    echo    
+    /opt/factorio/docker-container/updater/updater -dockerfile "$DIR/Dockerfile" -composefile "$DIR/docker-compose.yml" $FORCE_UPDATE
+
+    if [ $? -eq 0 ]; then
+        docker-compose -f $DIR/docker-compose.yml down
+        docker-compose -f $DIR/docker-compose.yml build
+        docker-compose -f $DIR/docker-compose.yml up -d
+        # Make sure the container is running
+        RUNNING=$(docker-compose -f $DIR/docker-compose.yml ps -q factorio | xargs docker inspect -f '{{ .State.Running }}')
+    
+        if [ "$RUNNING" != "true" ]; then
+            return 1
+        else
+            return 0
+        fi
+    fi
+
+    return 0
+}
+
+while [ $UPDATE_SUCCESFUL -ne 0 ]; do
+    check_for_update
+    if [ $? -eq 0 ]; then
+        UPDATE_SUCCESFUL=0
+        break
+    fi
+
+    FORCE_UPDATE="-force"
+done
 

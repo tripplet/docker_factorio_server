@@ -2,10 +2,21 @@ version: '2'
 services:
   factorio:
     build: .
+    image: factorio-server:0.17.32
+    restart: unless-stopped
     ports:
-     - "34197:34197/udp"
-     - "27015:27015/tcp"
+      - "34197:34197/udp"
+      - "27015:27015/tcp"
     volumes:
-     - /opt/factorio:/factorio
-#    user: 845:845
-#    user: 1000:1000
+      - ../../data:/factorio
+    user: 845:845
+  factorio-notifications:
+    restart: unless-stopped
+    depends_on: 
+      - factorio
+    image: "ttobias/logfile-notifications"
+    environment:
+      - TZ=Europe/Berlin
+    volumes:
+      - ../../notifications/config.yaml:/config.yaml
+      - ../../data/logs/:/logs

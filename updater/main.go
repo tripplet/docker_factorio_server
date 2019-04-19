@@ -24,6 +24,7 @@ const url = "https://www.factorio.com/download-headless/experimental"
 func main() {
 	composefilePath := flag.String("composefile", "docker-compose.yml", "Path to compose file if not same directory")
 	dockerfilePath := flag.String("dockerfile", "Dockerfile", "Path to dockerfile if not same directory")
+	forceUpdate := flag.Bool("force", false, "Force the update of the files")
 	flag.Parse()
 
 	fmt.Println("- Checking for update...")
@@ -57,10 +58,15 @@ func main() {
 	fmt.Println("  Current version: " + envParamter["VERSION"])
 	fmt.Println("  Latest version:  " + latestVersion)
 
-	if version.CompareSimple(latestVersion, envParamter["VERSION"]) <= 0 {
+	if version.CompareSimple(latestVersion, envParamter["VERSION"]) <= 0 && !*forceUpdate {
 		fmt.Println()
 		fmt.Println("- No update available")
 		os.Exit(1)
+	}
+
+	if *forceUpdate {
+		fmt.Println()
+		fmt.Println("- Forced update")
 	}
 
 	fmt.Println()

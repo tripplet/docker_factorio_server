@@ -9,7 +9,7 @@ mkdir -p $SAVES
 mkdir -p $CONFIG
 mkdir -p $MODS
 mkdir -p $SCENARIOS
-mkdir -p $SCRIPTOUTPUT
+mkdir -p $LOGS
 
 if [ ! -f $CONFIG/rconpw ]; then
   # Generate a new RCON password if none exists
@@ -64,5 +64,5 @@ exec ${SU_EXEC} /opt/factorio/bin/x64/factorio \
   --server-adminlist $CONFIG/server-adminlist.json \
   --server-banlist $CONFIG/server-banlist.json \
   --rcon-password "$(cat $CONFIG/rconpw)" \
-  --server-id /factorio/config/server-id.json \
-  "$@"
+  --server-id $CONFIG/server-id.json \
+  "$@" 2>&1 | tee $LOGS/server.log
