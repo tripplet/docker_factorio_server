@@ -46,7 +46,7 @@ fi
 ./docker-dlc.sh
 
 EXEC=""
-if [[ $(id -u) = 0 ]]; then
+if [[ $(id -u) == 0 ]]; then
   # Update the User and Group ID based on the PUID/PGID variables
   usermod -o -u "$PUID" factorio
   groupmod -o -g "$PGID" factorio
