@@ -51,7 +51,6 @@
   "1.1.91": {
     "sha256": "2288b21afb1d96aa06712a2ae2e31b9c45f0aa4a2e9dec041125d874f0781f6d",
     "tags": [
-      "latest",
       "stable",
       "1",
       "1.1",
@@ -68,6 +67,13 @@
     "sha256": "bfda94df030b969c3a0a0143468fabd73291aeefacabb6fc8dcab43df0d93bdc",
     "tags": [
       "1.1.90"
+    ]
+  },
+  "1.1.92": {
+    "sha256": "88ab1220c1e435f54cd5880d7bcaa3d25f8c4f1bb8f73da67203821cb2b84312",
+    "tags": [
+      "latest",
+      "1.1.92"
     ]
   }
 }
