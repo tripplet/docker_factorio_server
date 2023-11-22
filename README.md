@@ -3,7 +3,8 @@
 [中文](./README_zh_CN.md)
 
 <!-- start autogeneration tags -->
-* `1.1.97`, `latest`
+* `1.1.98`, `latest`
+* `1.1.97`
 * `1.1.96`
 * `1.1.95`
 * `1`, `1.1`, `1.1.94`, `stable`
