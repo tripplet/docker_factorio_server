@@ -6,6 +6,7 @@ ARG USER=factorio
 ARG GROUP=factorio
 ARG PUID=845
 ARG PGID=845
+ARG BOX64_VERSION=v0.2.4
 
 # version checksum of the archive to download
 ARG VERSION
@@ -40,13 +41,21 @@ RUN set -ox pipefail \
     && mkdir -p /opt /factorio \
     && apt-get -q update \
     && DEBIAN_FRONTEND=noninteractive apt-get -qy install ca-certificates curl jq pwgen xz-utils --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/* \
     && curl -sSL "https://www.factorio.com/get-download/$VERSION/headless/linux64" -o "$archive" --retry $CURL_RETRIES\
     && echo "$SHA256  $archive" | sha256sum -c \
     || (sha256sum "$archive" && file "$archive" && exit 1) \
     && tar xf "$archive" --directory /opt \
     && chmod ugo=rwx /opt/factorio \
     && rm "$archive" \
+    && if [[ "$(uname -m)" == "aarch64" ]]; then \
+        echo "installing ARM compatability layer" \
+        && DEBIAN_FRONTEND=noninteractive apt-get -qy install unzip --no-install-recommends \ 
+        && curl -LO https://github.com/ptitSeb/box64/releases/download/${BOX64_VERSION}/box64-GENERIC_ARM-RelWithDebInfo.zip \
+        && unzip box64-GENERIC_ARM-RelWithDebInfo.zip -d /bin \
+        && rm -f box64-GENERIC_ARM-RelWithDebInfo.zip \
+        && chmod +x /bin/box64; \
+    fi \
+    && rm -rf /var/lib/apt/lists/* \
     && ln -s "$SCENARIOS" /opt/factorio/scenarios \
     && ln -s "$SAVES" /opt/factorio/saves \
     && mkdir -p /opt/factorio/config/ \
