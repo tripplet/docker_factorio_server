@@ -90,8 +90,14 @@
   "1.1.106": {
     "sha256": "6787394965d1eaaf9b7638eecda6de3e3d5d96f0d89fe28c93bd610558fbbb04",
     "tags": [
-      "latest",
       "1.1.106"
+    ]
+  },
+  "1.1.107": {
+    "sha256": "5cf3821464c447d342b8859e7af710c33066b909ee7a4fc3efa92f9dbe0dba81",
+    "tags": [
+      "latest",
+      "1.1.107"
     ]
   }
 }
