@@ -20,6 +20,8 @@ ARG PRESET
 ARG VERSION
 ARG SHA256
 
+LABEL factorio.version=${VERSION}
+
 # number of retries that curl will use when pulling the headless server tarball
 ARG CURL_RETRIES=8
 
