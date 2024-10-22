@@ -6,7 +6,6 @@ on:
       - master
     tags:
       - latest
-  pull_request:
 
 jobs:
   build:
