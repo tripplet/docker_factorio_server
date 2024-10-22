@@ -28,7 +28,8 @@ ENV PORT=34197 \
     SCENARIOS=/factorio/scenarios \
     SCRIPTOUTPUT=/factorio/script-output \
     PUID="$PUID" \
-    PGID="$PGID"
+    PGID="$PGID" \
+    DLC_SPACE_AGE="true"
 
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
