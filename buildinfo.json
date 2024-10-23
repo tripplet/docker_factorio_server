@@ -60,6 +60,11 @@
   "2.0.9": {
     "sha256": "f499077b3e2c1313452c350f1faf17db31cae2a0fa738f69166e97c3caa3c86d",
     "tags": [
+      "latest",
+      "stable",
+      "stable-2.0.9",
+      "2",
+      "2.0",
       "2.0.9"
     ]
   }
