@@ -4,8 +4,10 @@ on:
   push:
     branches:
       - master
-    tags:
-      - latest
+    paths:
+      - buildinfo.json
+  # workaround for #526
+  workflow_dispatch:
 
 jobs:
   build:
