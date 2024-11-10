@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PLAYERS=$(docker exec xenodochial_spence rcon /players)
+PLAYERS=$(rcon /players)
 ONLINE_COUNT=$(echo "$PLAYERS" | grep -c " (online)$")
 
 if [[ "$ONLINE_COUNT" -gt "0" ]]; then
