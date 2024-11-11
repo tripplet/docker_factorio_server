@@ -1,4 +1,5 @@
-FROM debian:stable-slim AS builder
+# build rcon client
+FROM debian:stable-slim AS rcon-builder
 RUN apt-get -q update \
     && DEBIAN_FRONTEND=noninteractive apt-get -qy install build-essential
 
@@ -89,7 +90,7 @@ RUN set -ox pipefail \
 
 COPY files/*.sh /
 COPY files/config.ini /opt/factorio/config/config.ini
-COPY --from=builder /src/rcon /bin/rcon
+COPY --from=rcon-builder /src/rcon /bin/rcon
 
 VOLUME /factorio
 EXPOSE $PORT/udp $RCON_PORT/tcp
