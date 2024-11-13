@@ -15,7 +15,7 @@ services:
     #  # Labels to allow autoupdate only if no players are online
     #  - com.centurylinklabs.watchtower.enable=true
     #  - com.centurylinklabs.watchtower.scope=factorio
-    #  - com.centurylinklabs.watchtower.lifecycle.pre-check="/players-online.sh"
+    #  - com.centurylinklabs.watchtower.lifecycle.pre-update="/players-online.sh"
 
   # Uncomment the following files to use watchtower for updating the factorio container
   # Full documentation of watchtower: https://github.com/containrrr/watchtower
