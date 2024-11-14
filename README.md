@@ -98,6 +98,15 @@ docker run -d -it  \
 docker attach factorio
 ```
 
+### RCON (2.0.18+)
+
+Alternativly (e.g. for scripting) the RCON connection can be used to send commands to the running factorio server.
+This does not require the RCON connection to be exposed.
+
+```shell
+docker exec factorio rcon /h
+```
+
 ### Upgrading
 
 Before upgrading backup the save. It's easy to make a save in the client.

@@ -1,5 +1,14 @@
-FROM debian:stable-slim
+# build rcon client
+FROM debian:stable-slim AS rcon-builder
+RUN apt-get -q update \
+    && DEBIAN_FRONTEND=noninteractive apt-get -qy install build-essential
 
+WORKDIR /src
+COPY rcon/ /src
+RUN make
+
+# build factorio image
+FROM debian:stable-slim
 LABEL maintainer="https://github.com/factoriotools/factorio-docker"
 
 ARG USER=factorio
@@ -81,6 +90,7 @@ RUN set -ox pipefail \
 
 COPY files/*.sh /
 COPY files/config.ini /opt/factorio/config/config.ini
+COPY --from=rcon-builder /src/rcon /bin/rcon
 
 VOLUME /factorio
 EXPOSE $PORT/udp $RCON_PORT/tcp
