@@ -11,8 +11,10 @@ services:
       - ./data:/factorio
     environment:
       - UPDATE_MODS_ON_START=true
+    
+    # Uncomment to enable autoupdate via watchtower
     #labels:
-    #  # Labels to allow autoupdate only if no players are online
+    #  # Labels to allow watchtower autoupdate only if no players are online
     #  - com.centurylinklabs.watchtower.enable=true
     #  - com.centurylinklabs.watchtower.scope=factorio
     #  - com.centurylinklabs.watchtower.lifecycle.pre-update="/players-online.sh"
