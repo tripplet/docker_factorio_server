@@ -4,7 +4,7 @@ RUN apt-get -q update \
     && DEBIAN_FRONTEND=noninteractive apt-get -qy install build-essential
 
 WORKDIR /src
-COPY rcon/* /src
+COPY rcon/ /src
 RUN make
 
 # build factorio image
