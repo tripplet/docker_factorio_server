@@ -25,7 +25,7 @@
 ## Tag descriptions
 
 * `latest` - most up-to-date version (may be experimental).
-* `stable` - version declared stable on [factorio.com](https://www.factorio.com).
+* `stable` - version declared stable on [factorio.com](https://www.factorio.com) ([FFF-435 Since 2.0 versions gets released as experimental first, once stable it will be marked as stable](https://factorio.com/blog/post/fff-435)).
 * `0.x`    - latest version in a branch.
 * `0.x.y` - a specific version.
 * `0.x-z` - incremental fix for that version.
