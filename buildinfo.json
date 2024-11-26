@@ -116,12 +116,18 @@
   "2.0.21": {
     "sha256": "1d6d2785006d6a8d9d5fdcdaa7097a189ec35ba95f3521025dc4e046f7a1398e",
     "tags": [
-      "latest",
-      "stable",
       "stable-2.0.21",
       "2",
       "2.0",
-      "2.0.21"
+      "2.0.21",
+      "stable"
+    ]
+  },
+  "2.0.22": {
+    "sha256": "14c3eea7600fbe7f35bca52fe4c277e8f5e23b34c35ebebaa46c6752c750cb85",
+    "tags": [
+      "latest",
+      "2.0.22"
     ]
   }
 }
