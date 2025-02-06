@@ -6,7 +6,8 @@
 [中文](./README_zh_CN.md)
 
 <!-- start autogeneration tags -->
-* `2.0.33`, `latest`
+* `2.0.34`, `latest`
+* `2.0.33`
 * `2`, `2.0`, `2.0.32`, `stable`, `stable-2.0.32`
 * `2.0.31`
 * `2.0`, `2.0.30`, `stable-2.0.30`
