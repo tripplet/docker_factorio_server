@@ -244,8 +244,14 @@
   "2.0.40": {
     "sha256": "eac1f24afb68acbfcf1d72d2ad142e8584d77f2d100a3af743f106e50ac176d3",
     "tags": [
-      "latest",
       "2.0.40"
+    ]
+  },
+  "2.0.41": {
+    "sha256": "77ebccae8167fc1a9fc4da8c11e8410f6017b92b1a0913eb58ac5285c9eec399",
+    "tags": [
+      "latest",
+      "2.0.41"
     ]
   }
 }
