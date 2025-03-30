@@ -33,5 +33,6 @@ services:
   #    - WATCHTOWER_LABEL_ENABLE=true
   #    - WATCHTOWER_POLL_INTERVAL=3600
   #    - WATCHTOWER_LIFECYCLE_HOOKS=true
+  #    - WATCHTOWER_SCOPE=factorio
   #  labels:
   #    - com.centurylinklabs.watchtower.scope=factorio
